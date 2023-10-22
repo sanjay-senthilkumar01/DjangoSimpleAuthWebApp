@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <!-- Include Bootstrap CSS link here -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-...." crossorigin="anonymous" />
+
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    
+
+    <style>
+        /* Add your existing styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1E1E1E;
+            background-image: linear-gradient(to bottom, #1E1E1E, #333333);
+            background-image: -webkit-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -moz-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -o-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -ms-linear-gradient(top, #1E1E1E, #333333);
+        }
+
+        .profile-header {
+            background-color: #333333;
+            color: white;
+            padding: 5px 10px;
+            text-align: center;
+            z-index: 1;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 50px;
+        }
+
+        .user-details {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: #ccc;
+            margin-right: 5px;
+        }
+
+        .user-name {
+            font-size: 18px;
+            margin-left: 10px;
+        }
+
+        .container {
+            position: relative;
+            max-width: 400px; /* Adjusted the max-width */
+            margin: 20px 10px;  /* Added margin to the top and right */
+            padding: 20px;
+            background: linear-gradient(to bottom, #303841, #3A4750);
+
+     
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            color: #fff;
+            border: 2px solid #45f3ff; 
+            
+        }
+        
+
+        .profile-image {
+            width: 80px; /* Adjusted the width */
+            height: 80px; /* Adjusted the height */
+            border-radius: 50%;
+            margin: 0 auto 10px; 
+            background-size: cover;
+            background-position: center;
+        }
+
+        .profile-name {
+            font-size: 20px; /* Adjusted the font size */
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .profile-details {
+            text-align: left; /* Adjusted the text alignment */
+        }
+
+        .profile-details p {
+            margin: 5px 0;
+        }
+
+        .profile-details p strong {
+            font-size: 14px;
+        }
+
+        .edit-profile-link {
+            display: block;
+            margin-top: 10px; /* Adjusted the margin */
+            text-align: center;
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .edit-profile-link:hover {
+            text-decoration: underline;
+        }
+
+        .edit-form {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-height: 50vh;
+            width: auto;
+            overflow-y: auto;
+            z-index: 2;
+            background: linear-gradient(to bottom, #1E1E1E, #333333);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .edit-form-header,
+        .edit-form-bottom-bar {
+            background-color: #333333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            z-index: 3;
+        }
+
+        .edit-form-header {
+            cursor: pointer;
+        }
+
+        .edit-form-bottom-bar {
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .hover-description {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            max-width: 80vw;
+            max-height: 80vh;
+            overflow-y: auto;
+            padding: 20px;
+            background: linear-gradient(to bottom, #303841, #3A4750);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            z-index: 4;
+            color: #fff;
+            border: 2px solid #3bcbd5; 
+        }
+
+        .hover-description-content {
+            margin-bottom: 10px;
+        }
+
+        .hover-cover {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 3;
+        }
+
+        body.overflow-hidden {
+            overflow: hidden;
+        }
+        .detail-bar {
+    height: 1px;
+    background-color: #ddd; /* Color of the detail bar */
+    margin: 8px 0;
+}
+    </style>
+</head>
+
+<body>
+    <div class="profile-header">
+        <h3>AI Server Side prototype</h3>
+        <div class="user-details">
+            <img src="{{ request.user.profile.image.url }}" alt="{{ request.user.username }}" class="user-avatar">
+            {% if request.user.profile %}
+            <span class="user-name"><a href="{% url 'profile' %}" style="color: white;">{{ request.user.username }}</a></span>
+            {% else %}
+            <span class="user-name">{{ request.user}}</span>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="profile-image" style="background-image: url('{{ user.profile.image.url }}');"></div>
+        <div class="profile-name">{{ user.profile.first_name }} {{ user.profile.last_name }}</div>
+        <div class="profile-details">
+          <!-- User Profile Details -->
+         <!-- User Profile Details -->
+<div class="detail-item">
+    <p>
+        <i class="fas fa-birthday-cake"></i>
+        <small>{{ user.profile.birthday }}</small> 
+    </p>
+    <div class="detail-bar"></div>
+</div>
+
+<div class="detail-item">
+    <p>
+        <small> <i class="fas fa-envelope"></i> {{ user.email }}</small>
+    </p>
+    <div class="detail-bar"></div>
+</div>
+
+<div class="detail-item">
+    <p>
+       <small style="font-size: 13px;"><i class="fas fa-map-marker-alt"></i> {{ user.profile.location }}</small>
+    </p>
+    <div class="detail-bar"></div>
+</div>
+
+<!-- Experience Details -->
+{% for experience in user.profile.experience_set.all %}
+    <div class="detail-item">
+        <p>
+            <strong>{{ experience.title }} at {{ experience.company }}</strong><br>
+            <span style="font-size: 12px;">{{ experience.start_date }} - {{ experience.end_date }}<br>
+            {{ experience.location_experience }}</span>
+        </p>
+        <div class="detail-bar"></div>
+    </div>
+{% endfor %}
+
+<!-- Education Details -->
+{% for education in user.profile.education_set.all %}
+    <div class="detail-item">
+        <p>
+            <small><i class="fas fa-graduation-cap"> </i></small>
+            <strong>{{ education.degree }} at {{ education.school }}</strong><br>
+            <span style="font-size: 12px;">{{ education.start_date }} - {{ education.end_date }}<br>
+            Field of Study: {{ education.field_of_study }}</span>
+        </p>
+        <div class="detail-bar"></div>
+    </div>
+{% endfor %}
+
+<!-- Website Details -->
+{% for website in user.profile.website_set.all %}
+    <div class="detail-item">
+        <p>
+            <i class="fas fa-globe"></i>
+            <a href="{{ website.url }}" target="_blank" style="color: #c3b291;">{{ website.url }}</a>
+        </p>
+        <div class="detail-bar"></div>
+    </div>
+{% endfor %}
+
+           
+            <p>
+                <strong>Description:</strong>
+                <span id="short-description" style="font-size: 14px;">
+                    {{ user.profile.description|truncatewords:40 }}
+                    <a href="#" id="read-more-link" style="color: #e0dede;">Read More</a>
+                </span>
+               
+            </p>
+            <!-- Add more profile details as needed -->
+        </div>
+        <a href="#" class="edit-profile-link" id="edit-button" style="color: #e0dede;">Edit Profile</a>
+    </div>
+    
+
+    <!-- Edit Profile Form -->
+    <div class="edit-form" id="edit-form">
+        <div class="edit-form-header">
+            <h2>Edit Profile</h2>
+        </div>
+        <div class="container mt-5">
+            <!-- Include your Django edit form here -->
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ u_form.username.id_for_label }}">Username</label>
+                    {{ u_form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ u_form.email.id_for_label }}">Email</label>
+                    {{ u_form.email }}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ p_form.image.id_for_label }}">Profile Image</label>
+                    {{ p_form.image }}
+                    <img id="profile-image-preview" src="{{ user.profile.image.url }}" alt="{{ user.username }}"
+                        class="profile-image">
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ p_form.first_name.id_for_label }}">First Name</label>
+                    {{ p_form.first_name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ p_form.last_name.id_for_label }}">Last Name</label>
+                    {{ p_form.last_name }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ p_form.birthday.id_for_label }}">Birthday</label>
+                    {{ p_form.birthday }}
+                    <br>
+                    <small>(YYYY-MM-DD)</small>
+                </div>
+                <div class="form-group">
+                    <label for="{{ p_form.description.id_for_label }}">Description</label>
+                    {{ p_form.description }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ p_form.location.id_for_label }}">Location</label>
+                    {{ p_form.location }}
+                </div>
+               
+                <div class="edit-form-bottom-bar">
+                    <button type="submit" class="btn btn-primary">Update Profile</button>
+                    <button type="button" class="btn btn-secondary mt-2" id="return-button">Return Back</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Hovering Description -->
+    <div class="hover-cover" id="hover-cover"></div>
+    <div class="hover-description" id="hover-description">
+        <div class="hover-description-content" id="full-description"></div>
+        <a href="#" id="read-less-link">Read Less</a>
+    </div>
+
+    <!-- Include Bootstrap and JavaScript libraries -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#edit-button").click(function () {
+                $("#edit-form").toggle();
+            });
+
+            // Handle image preview
+            $("#id_image").change(function () {
+                readURL(this);
+            });
+
+            function readURL(input) {
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $("#profile-image-preview").attr("src", e.target.result);
+                    };
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+            // Clicking away from the form
+            $(document).mouseup(function (e) {
+                var container = $("#edit-form");
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    container.hide();
+                }
+            });
+
+            $("#return-button").click(function () {
+                $("#edit-form").hide();
+            });
+
+            // Read more and read less functionality for description
+            $("#read-more-link").click(function () {
+                var fullDescription = "{{ user.profile.description|escapejs }}";
+                $("#full-description").text(fullDescription);
+                $("#hover-description").show();
+                $("#hover-cover").show();
+                $("body").addClass("overflow-hidden");
+            });
+
+            $("#read-less-link").click(function () {
+                $("#hover-description").hide();
+                $("#hover-cover").hide();
+                $("body").removeClass("overflow-hidden");
+            });
+
+            // Clicking away from the hovering description
+            $(document).mouseup(function (e) {
+                var container = $("#hover-description");
+                if (!container.is(e.target) && container.has(e.target).length === 0) {
+                    $("#hover-description").hide();
+                    $("#hover-cover").hide();
+                    $("body").removeClass("overflow-hidden");
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

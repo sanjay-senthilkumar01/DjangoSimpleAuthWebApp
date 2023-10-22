@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logout</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add any additional custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1E1E1E; 
+            background-image: linear-gradient(to bottom, #1E1E1E, #333333);
+            background-image: -webkit-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -moz-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -o-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -ms-linear-gradient(top, #1E1E1E, #333333);
+            color: white; /* Text color for the body */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Center content vertically */
+        }
+
+        .container {
+            position: relative;
+            width: 380px;
+            background-color: #1c1c1c;
+
+            border-radius: 20px;
+            border: 2px solid #45f3ff; /* Border added */
+            padding: 20px;
+        }
+
+        .message {
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .logout-button {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn-login {
+            background-color: #FF4500; /* Contrasting button color */
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 20px; /* Smaller padding */
+            text-transform: uppercase; /* Uppercase text */
+            font-size: 14px; /* Smaller font size */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Logout</h2>
+        <div class="message">
+            <p>You have been successfully logged out.</p>
+        </div>
+        <div class="logout-button">
+            <a href="{% url 'login' %}" class="btn btn-login">Login</a>
+        </div>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery script links here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

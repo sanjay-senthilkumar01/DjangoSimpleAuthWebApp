@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Developer App Signup</title>
+    <!-- Add Bootstrap CSS link here -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Add any additional custom styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #1E1E1E; 
+            background-image: linear-gradient(to bottom, #1E1E1E, #333333);
+            background-image: -webkit-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -moz-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -o-linear-gradient(top, #1E1E1E, #333333);
+            background-image: -ms-linear-gradient(top, #1E1E1E, #333333);
+            color: white; /* Text color for the body */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh; /* Center content vertically */
+        }
+
+        .container {
+            position: relative;
+            width: 380px;
+            background-color: #1c1c1c;
+            border-radius: 20px;
+            border: 2px solid #45f3ff; /* Border added */
+            padding: 20px;
+        }
+
+        form fieldset {
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            color: #ccc; /* Light text color for labels */
+        }
+
+        form .form-group {
+            margin-bottom: 25px; /* Increased space between form fields */
+        }
+
+        form button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 0; /* Center the button vertically */
+            width: 100%; /* Full width */
+            cursor: pointer;
+        }
+
+        form small {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 12px; /* Decrease font size for guidelines */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2 class="text-center">Developer App Signup</h2>
+        <form method="post">
+            {% csrf_token %}
+            <fieldset>
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.email.id_for_label }}">Email</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password1.id_for_label }}">Password</label>
+                    {{ form.password1 }}
+                </div>
+                <div class="form-group">
+                    <label for="{{ form.password2.id_for_label }}">Confirm Password</label>
+                    {{ form.password2 }}
+                </div>
+                <button type="submit" class="btn btn-primary">Sign Up</button>
+                <small>
+                    Your password can’t be too similar to your other personal information.
+                    Your password must contain at least 8 characters.
+                    Your password can’t be a commonly used password.
+                    Your password can’t be entirely numeric.
+                </small>
+            </fieldset>
+        </form>
+        <small class="text-center">Already have an account? <a href="{% url 'login' %}">Login</a></small>
+    </div>
+
+    <!-- Add Bootstrap JS and jQuery script links here -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
